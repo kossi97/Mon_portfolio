@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur de prêt hypothécaire</title>
+</head>
+<body>
+    <h2>Calculateur de prêt hypothécaire</h2>
+
+    <!-- Formulaire de saisie -->
+    <form id="loanForm">
+        <label for="montantPret">Montant du prêt (en €) :</label>
+        <input type="number" id="montantPret" placeholder="Montant du prêt" required><br><br>
+
+        <label for="tauxInteret">Taux d'intérêt annuel (%) :</label>
+        <input type="number" id="tauxInteret" placeholder="Taux d'intérêt annuel" required><br><br>
+
+        <label for="dureeAnnees">Durée du prêt (en années) :</label>
+        <input type="number" id="dureeAnnees" placeholder="Durée du prêt en années" required><br><br>
+
+        <button type="button" onclick="calculerPaiement()">Calculer</button>
+    </form>
+
+    <!-- Affichage du paiement mensuel -->
+    <p id="resultat"></p>
+
+    <script>
+        // Fonction pour calculer le paiement mensuel
+        function calculerPaiement() {
+            // Récupérer les valeurs saisies
+            const montantPret = parseFloat(document.getElementById("montantPret").value);
+            const tauxInteret = parseFloat(document.getElementById("tauxInteret").value) / 100;
+            const dureeAnnees = parseInt(document.getElementById("dureeAnnees").value);
+
+            // Vérifier la validité des entrées
+            if (isNaN(montantPret) || montantPret <= 0) {
+                alert("Veuillez entrer un montant de prêt valide et positif.");
+                return;
+            }
+            if (isNaN(tauxInteret) || tauxInteret <= 0) {
+                alert("Veuillez entrer un taux d'intérêt valide et positif.");
+                return;
+            }
+            if (isNaN(dureeAnnees) || dureeAnnees <= 0) {
+                alert("Veuillez entrer une durée valide en années.");
+                return;
+            }
+
+            // Calcul du paiement mensuel en utilisant la formule de l'amortissement
+            const tauxMensuel = tauxInteret / 12; // Taux d'intérêt mensuel
+            const nombrePaiements = dureeAnnees * 12; // Nombre total de paiements (mois)
+            const paiementMensuel = montantPret * (tauxMensuel * Math.pow(1 + tauxMensuel, nombrePaiements)) / (Math.pow(1 + tauxMensuel, nombrePaiements) - 1);
+
+            // Afficher le résultat dans le paragraphe
+            document.getElementById("resultat").innerText = `Votre paiement mensuel est de : €${paiementMensuel.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
