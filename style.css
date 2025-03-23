@@ -163,6 +163,11 @@
             color: black;
         }
 
+        .about-text span {
+            color: #5ce7f1
+
+        }
+
         .info-list {
             list-style: none;
             margin: 20px 0;
